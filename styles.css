@@ -1,0 +1,232 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212; /* Black background */
+    color: #e0e0e0; /* Light text color */
+    line-height: 1.6;
+}
+
+h1, h2 {
+    color: #00bcd4; /* Cyan for headings */
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Login/Signup Page */
+#authPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full-page height */
+    background-color: #1e1e1e;
+    border-radius: 10px;
+}
+
+.auth-buttons button {
+    background-color: #00bcd4;
+    color: #121212;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.auth-buttons button:hover {
+    background-color: #008ba3; /* Slightly darker cyan */
+}
+
+.auth-buttons button:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px #00bcd4;
+}
+
+/* Main Page Styles */
+#mainPage.hidden {
+    display: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+}
+
+header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+header button {
+    background-color: #f44336; /* Red for logout */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+header button:hover {
+    background-color: #d32f2f;
+}
+
+/* Review Form Styles */
+.review-form {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.review-form input,
+.review-form textarea,
+.review-form button,
+.review-form select {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #2b2b2b;
+    color: #e0e0e0;
+    font-size: 16px;
+}
+
+.review-form select {
+    cursor: pointer;
+}
+
+.review-form button {
+    background-color: #00bcd4;
+    color: #121212;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.review-form button:hover {
+    background-color: #008ba3;
+}
+
+.review-form button:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px #00bcd4;
+}
+
+/* Review List Styles */
+.reviews {
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.review-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.review-item {
+    background-color: #2b2b2b;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.review-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.review-item h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #00bcd4;
+}
+
+.review-item p {
+    margin: 10px 0;
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+.photo-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+.photo-container img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
+/* Upvote Button */
+.upvote-button {
+    background-color: #4caf50; /* Green for upvote */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upvote-button:hover {
+    background-color: #388e3c;
+}
+
+.upvote-button:disabled {
+    background-color: #616161; /* Gray for disabled button */
+    cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .auth-buttons button,
+    .review-form input,
+    .review-form textarea,
+    .review-form button,
+    .review-form select {
+        font-size: 14px;
+    }
+
+    .review-item h3 {
+        font-size: 18px;
+    }
+
+    .photo-container img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+
+

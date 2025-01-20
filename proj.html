@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Review App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="authPage" class="container">
+        <h1>Welcome to Gaming Review App</h1>
+        <p>Login or Sign Up to share your reviews!</p>
+        <div class="auth-buttons">
+            <button id="loginSteam">Login with Steam</button>
+        </div>
+    </div>
+
+    <div id="mainPage" class="container hidden">
+        <header>
+            <h1>Gaming Review App</h1>
+            <button id="logout">Logout</button>
+        </header>
+
+        <section class="review-form">
+            <h2>Submit a Review</h2>
+            <!-- Game Title Input -->
+            <input type="text" id="gameTitle" placeholder="Game Title" required>
+
+            <!-- Review Type Dropdown -->
+            <label for="reviewType">Select Review Type:</label>
+            <select id="reviewType" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="Data Breach">Data Breach</option>
+                <option value="Fraud">Fraud</option>
+                <option value="Gambling-Based">Gambling-Based</option>
+                <option value="Skill-Based">Skill-Based</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <!-- Review Text Area -->
+            <textarea id="reviewText" placeholder="Your Review (e.g., skill-based vs luck-based)" required></textarea>
+            
+            <!-- Photo Input -->
+            <input type="file" id="photoInput" multiple accept="image/*">
+            
+            <!-- Submit Button -->
+            <button id="submitReview">Submit Review</button>
+        </section>
+
+        <section class="reviews">
+            <h2>Community Reviews</h2>
+            <div id="reviewList" class="review-list"></div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const authPage = document.getElementById('authPage');
+            const mainPage = document.getElementById('mainPage');
+            const loginSteamButton = document.getElementById('loginSteam');
+            const logoutButton = document.getElementById('logout');
+            const submitReviewButton = document.getElementById('submitReview');
+            const reviewList = document.getElementById('reviewList');
+
+            let currentUser = null; // Simulates user session
+            let upvotedReviews = {}; // Tracks upvotes by user
+
+            // Steam authentication logic
+            loginSteamButton.addEventListener('click', () => {
+                const accountName = prompt('Enter your Steam Account Name:');
+                const password = prompt('Enter your Steam Password:');
+
+                if (accountName && password) {
+                    currentUser = accountName; // In a real app, authentication would involve server validation
+                    alert(`Logged in as ${currentUser} via Steam`);
+                    authPage.classList.add('hidden');
+                    mainPage.classList.remove('hidden');
+                } else {
+                    alert('Please enter both account name and password to log in.');
+                }
+            });
+
+            logoutButton.addEventListener('click', () => {
+                currentUser = null;
+                authPage.classList.remove('hidden');
+                mainPage.classList.add('hidden');
+            });
+
+            // Load existing reviews
+            const loadReviews = () => {
+                const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+                reviews.forEach((review) => displayReview(review));
+            };
+
+            // Save reviews to local storage
+            const saveReview = (review) => {
+                const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+                reviews.push(review);
+                localStorage.setItem('reviews', JSON.stringify(reviews));
+            };
+
+            // Display a single review
+            const displayReview = (review) => {
+                const reviewDiv = document.createElement('div');
+                reviewDiv.classList.add('review-item');
+
+                const titleElement = document.createElement('h3');
+                titleElement.textContent = review.gameTitle;
+
+                const typeElement = document.createElement('p');
+                typeElement.textContent = `Review Type: ${review.reviewType}`;
+
+                const textElement = document.createElement('p');
+                textElement.textContent = review.reviewText;
+
+                const photoContainer = document.createElement('div');
+                photoContainer.classList.add('photo-container');
+                review.photos.forEach((photo) => {
+                    const img = document.createElement('img');
+                    img.src = photo;
+                    img.alt = "Review Image";
+                    photoContainer.appendChild(img);
+                });
+
+                const upvoteButton = document.createElement('button');
+                upvoteButton.classList.add('upvote-button');
+                upvoteButton.textContent = `Upvotes: ${review.upvotes}`;
+                upvoteButton.disabled = upvotedReviews[review.id] || false;
+
+                upvoteButton.addEventListener('click', () => {
+                    if (currentUser && !upvotedReviews[review.id]) {
+                        review.upvotes++;
+                        upvoteButton.textContent = `Upvotes: ${review.upvotes}`;
+                        upvotedReviews[review.id] = true;
+                        updateLocalStorage(review);
+                    }
+                });
+
+                reviewDiv.appendChild(titleElement);
+                reviewDiv.appendChild(typeElement);
+                reviewDiv.appendChild(textElement);
+                reviewDiv.appendChild(photoContainer);
+                reviewDiv.appendChild(upvoteButton);
+
+                reviewList.appendChild(reviewDiv);
+            };
+
+            // Update local storage after upvote
+            const updateLocalStorage = (updatedReview) => {
+                const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+                const index = reviews.findIndex((r) => r.id === updatedReview.id);
+                if (index !== -1) {
+                    reviews[index] = updatedReview;
+                    localStorage.setItem('reviews', JSON.stringify(reviews));
+                }
+            };
+
+            // Handle review submission
+            submitReviewButton.addEventListener('click', () => {
+                const gameTitle = document.getElementById('gameTitle').value.trim();
+                const reviewType = document.getElementById('reviewType').value.trim();
+                const reviewText = document.getElementById('reviewText').value.trim();
+                const photoInput = document.getElementById('photoInput');
+                const photos = Array.from(photoInput.files).map((file) =>
+                    URL.createObjectURL(file)
+                );
+
+                if (currentUser && gameTitle && reviewType && reviewText) {
+                    const review = {
+                        id: Date.now().toString(),
+                        gameTitle,
+                        reviewType,
+                        reviewText,
+                        photos,
+                        upvotes: 0,
+                    };
+
+                    saveReview(review);
+                    displayReview(review);
+
+                    // Clear form fields
+                    document.getElementById('gameTitle').value = '';
+                    document.getElementById('reviewType').value = '';
+                    document.getElementById('reviewText').value = '';
+                    photoInput.value = '';
+                } else {
+                    alert('Please fill out all fields and ensure you are logged in.');
+                }
+            });
+
+            // Load reviews on page load
+            loadReviews();
+        });
+    </script>
+</body>
+</html>
+
+
