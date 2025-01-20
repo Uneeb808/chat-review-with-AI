@@ -1,15 +1,15 @@
-/* General Styles */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #121212; /* Black background */
-    color: #e0e0e0; /* Light text color */
+    background-color: #121212; 
+    color: #e0e0e0; 
     line-height: 1.6;
 }
 
 h1, h2 {
-    color: #00bcd4; /* Cyan for headings */
+    color: #00bcd4; 
 }
 
 .container {
@@ -19,13 +19,13 @@ h1, h2 {
     padding: 20px;
 }
 
-/* Login/Signup Page */
+
 #authPage {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Full-page height */
+    height: 100vh; 
     background-color: #1e1e1e;
     border-radius: 10px;
 }
@@ -43,7 +43,7 @@ h1, h2 {
 }
 
 .auth-buttons button:hover {
-    background-color: #008ba3; /* Slightly darker cyan */
+    background-color: #008ba3; 
 }
 
 .auth-buttons button:focus {
@@ -51,7 +51,7 @@ h1, h2 {
     box-shadow: 0 0 5px 2px #00bcd4;
 }
 
-/* Main Page Styles */
+
 #mainPage.hidden {
     display: none;
 }
@@ -71,7 +71,7 @@ header h1 {
 }
 
 header button {
-    background-color: #f44336; /* Red for logout */
+    background-color: #f44336; 
     color: white;
     border: none;
     padding: 10px 15px;
@@ -84,7 +84,7 @@ header button:hover {
     background-color: #d32f2f;
 }
 
-/* Review Form Styles */
+
 .review-form {
     margin-bottom: 30px;
     padding: 20px;
@@ -128,7 +128,7 @@ header button:hover {
     box-shadow: 0 0 5px 2px #00bcd4;
 }
 
-/* Review List Styles */
+
 .reviews {
     padding: 20px;
     background-color: #1e1e1e;
@@ -183,9 +183,9 @@ header button:hover {
     border: 1px solid #333;
 }
 
-/* Upvote Button */
+
 .upvote-button {
-    background-color: #4caf50; /* Green for upvote */
+    background-color: #4caf50; 
     color: white;
     border: none;
     padding: 8px 12px;
@@ -199,11 +199,11 @@ header button:hover {
 }
 
 .upvote-button:disabled {
-    background-color: #616161; /* Gray for disabled button */
+    background-color: #616161; 
     cursor: not-allowed;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .container {
         width: 95%;
