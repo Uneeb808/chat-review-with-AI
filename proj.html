@@ -23,10 +23,8 @@
 
         <section class="review-form">
             <h2>Submit a Review</h2>
-            <!-- Game Title Input -->
             <input type="text" id="gameTitle" placeholder="Game Title" required>
 
-            <!-- Review Type Dropdown -->
             <label for="reviewType">Select Review Type:</label>
             <select id="reviewType" required>
                 <option value="" disabled selected>Select an option</option>
@@ -37,13 +35,10 @@
                 <option value="Others">Others</option>
             </select>
 
-            <!-- Review Text Area -->
             <textarea id="reviewText" placeholder="Your Review (e.g., skill-based vs luck-based)" required></textarea>
             
-            <!-- Photo Input -->
             <input type="file" id="photoInput" multiple accept="image/*">
             
-            <!-- Submit Button -->
             <button id="submitReview">Submit Review</button>
         </section>
 
@@ -62,16 +57,16 @@
             const submitReviewButton = document.getElementById('submitReview');
             const reviewList = document.getElementById('reviewList');
 
-            let currentUser = null; // Simulates user session
-            let upvotedReviews = {}; // Tracks upvotes by user
+            let currentUser = null; 
+            let upvotedReviews = {}; 
 
-            // Steam authentication logic
+            
             loginSteamButton.addEventListener('click', () => {
                 const accountName = prompt('Enter your Steam Account Name:');
                 const password = prompt('Enter your Steam Password:');
 
                 if (accountName && password) {
-                    currentUser = accountName; // In a real app, authentication would involve server validation
+                    currentUser = accountName; 
                     alert(`Logged in as ${currentUser} via Steam`);
                     authPage.classList.add('hidden');
                     mainPage.classList.remove('hidden');
@@ -86,20 +81,19 @@
                 mainPage.classList.add('hidden');
             });
 
-            // Load existing reviews
+        
             const loadReviews = () => {
                 const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
                 reviews.forEach((review) => displayReview(review));
             };
 
-            // Save reviews to local storage
+           
             const saveReview = (review) => {
                 const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
                 reviews.push(review);
                 localStorage.setItem('reviews', JSON.stringify(reviews));
             };
 
-            // Display a single review
             const displayReview = (review) => {
                 const reviewDiv = document.createElement('div');
                 reviewDiv.classList.add('review-item');
@@ -145,7 +139,6 @@
                 reviewList.appendChild(reviewDiv);
             };
 
-            // Update local storage after upvote
             const updateLocalStorage = (updatedReview) => {
                 const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
                 const index = reviews.findIndex((r) => r.id === updatedReview.id);
@@ -155,7 +148,6 @@
                 }
             };
 
-            // Handle review submission
             submitReviewButton.addEventListener('click', () => {
                 const gameTitle = document.getElementById('gameTitle').value.trim();
                 const reviewType = document.getElementById('reviewType').value.trim();
@@ -178,7 +170,6 @@
                     saveReview(review);
                     displayReview(review);
 
-                    // Clear form fields
                     document.getElementById('gameTitle').value = '';
                     document.getElementById('reviewType').value = '';
                     document.getElementById('reviewText').value = '';
@@ -188,7 +179,6 @@
                 }
             });
 
-            // Load reviews on page load
             loadReviews();
         });
     </script>
