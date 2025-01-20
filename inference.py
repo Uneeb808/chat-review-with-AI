@@ -1,30 +1,27 @@
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 
-# Load the tokenizer and model
+
 tokenizer = BertTokenizer.from_pretrained('give the file path here') #give file path of the model,the model is in the google drive
 model = BertForSequenceClassification.from_pretrained('give the file path here') #give file path of the model,the model is in the google drive
 
-# Function to predict sentiment
+
 def predict_sentiment(text):
-    # Tokenize the input text
+    
     inputs = tokenizer(text, return_tensors='pt', padding=True, truncation=True, max_length=512)
 
-    # Make predictions
+    
     with torch.no_grad():
         outputs = model(**inputs)
 
-    # Get the predicted label
     logits = outputs.logits
     predicted_class_id = logits.argmax().item()
 
-    # Map the predicted class ID to the label
     label_mapping = {0: 'negative', 1: 'positive'}
     predicted_label = label_mapping[predicted_class_id]
 
     return predicted_label
 
-# Test the model with some example sentences
 test_sentences = [
     "You are a shity player.",
     "This is the worst experience I've ever had.",
