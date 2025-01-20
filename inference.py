@@ -2,8 +2,8 @@ from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 
 # Load the tokenizer and model
-tokenizer = BertTokenizer.from_pretrained('/home/uneeb/Downloads/sentiment_model') #give file path of the model,the model is in the google drive
-model = BertForSequenceClassification.from_pretrained('/home/uneeb/Downloads/sentiment_model') #give file path of the model,the model is in the google drive
+tokenizer = BertTokenizer.from_pretrained('give the file path here') #give file path of the model,the model is in the google drive
+model = BertForSequenceClassification.from_pretrained('give the file path here') #give file path of the model,the model is in the google drive
 
 # Function to predict sentiment
 def predict_sentiment(text):
